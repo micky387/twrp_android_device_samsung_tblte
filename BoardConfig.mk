@@ -1,13 +1,22 @@
+# inherit from qcom-common
+-include device/samsung/qcom-common/BoardConfigCommon.mk
+
+TARGET_OTA_ASSERT_DEVICE := tblte,tbltexx,tbltedt,tbltevzw
+
 TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
-TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := krait
 TARGET_ARCH := arm
 TARGET_KERNEL_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
+
+# Charging mode
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+BOARD_BATTERY_DEVICE_NAME := "battery"
+BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
@@ -47,7 +56,7 @@ TARGET_KERNEL_VARIANT_CONFIG := apq8084_sec_tblte_eur_defconfig
 
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 BOARD_VOLD_MAX_PARTITIONS := 28
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
 
 # Use this flag if the board has a ext4 partition larger than 2gb
 BOARD_HAS_LARGE_FILESYSTEM := true
@@ -60,6 +69,7 @@ BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 DEVICE_RESOLUTION := 1600x2560
 TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
 TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 160
 RECOVERY_SDCARD_ON_DATA := true
 BOARD_HAS_NO_REAL_SDCARD := true
 RECOVERY_GRAPHICS_FORCE_USE_LINELENGTH := true
@@ -73,8 +83,9 @@ TW_HAS_DOWNLOAD_MODE := true
 TW_NO_EXFAT_FUSE := true
 TW_NO_EXFAT := true
 TARGET_RECOVERY_QCOM_RTC_FIX := true
-TW_MTP_DEVICE := "/dev/usb_mtp_gadget"
+#TW_MTP_DEVICE := "/dev/mtp_usb"
+TW_EXCLUDE_SUPERSU := true
 TWRP_INCLUDE_LOGCAT := true
 TW_INCLUDE_JPEG := true
-TWRP_EVENT_LOGGING := true
 TW_TARGET_USES_QCOM_BSP := false
+TW_NEVER_UNMOUNT_SYSTEM := true
